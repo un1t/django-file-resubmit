@@ -1,0 +1,11 @@
+django-file-resubmit
+===============
+
+django-file-resubmit is a reusable Django application that keeps selected 
+files on forms validation errors.
+
+
+Licensing
+---------
+
+django-file-resubmit is free software under terms of the MIT License.
