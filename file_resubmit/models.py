@@ -6,10 +6,13 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 
 
-class FileStorage(object):
+CACHE_BACKEND = "file:///tmp/file_resubmit" 
+
+
+class FileCache(object):
     
     def __init__(self):
-        self.backend = get_cache("file:///tmp/file_resubmit")
+        self.backend = get_cache(CACHE_BACKEND)
 
     def put(self, key, upload):
         state = {
