@@ -15,12 +15,14 @@ class FileCache(object):
         self.backend = get_cache(CACHE_BACKEND)
 
     def put(self, key, upload):
+        upload.file.seek(0)
         state = {
             "name": upload.name,
             "size": upload.size,
             "content_type": upload.content_type,
             "charset": upload.charset,
             "content": upload.file.read()}
+        upload.file.seek(0)
         self.backend.set(key, state)
 
     def get(self, key, field_name):
@@ -37,5 +39,6 @@ class FileCache(object):
                     content_type=state["content_type"],
                     size=size,
                     charset=state["charset"])
+            upload.file.seek(0)
         return upload
 

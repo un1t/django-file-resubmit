@@ -31,15 +31,12 @@ class AdminResubmitBaseWidget(AdminImageWidget):
         if files.has_key(name):
             self.cache_key = self.random_key()[:10]
             upload = files[name]
-            upload.file.seek(0)
             FileCache().put(self.cache_key, upload)
-            upload.file.seek(0)
         elif self.cache_key:
             restored = FileCache().get(self.cache_key, name)
             if restored:
                 upload = restored
                 files[name] = upload
-                upload.file.seek(0)
         return upload
     
     def random_key(self):
