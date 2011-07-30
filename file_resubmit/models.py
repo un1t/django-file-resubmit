@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from cStringIO import StringIO
+
 from django.core.cache import get_cache
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
 from django.conf import settings
 
 
-CACHE_BACKEND = "file:///tmp/file_resubmit" 
+CACHE_BACKEND = settings.CACHES.get('file_resubmit', "file:///tmp/file_resubmit")
 
 
 class FileCache(object):

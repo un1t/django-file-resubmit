@@ -10,16 +10,16 @@ import os
 from setuptools import setup
 
 
-readme = open(os.path.join(os.path.dirname(__file__), 'README')).read()
+readme = open(os.path.join(os.path.dirname(__file__), 'README.markdown')).read()
 
 setup(
     name     = 'django-file-resubmit',
     version  = '0.1',
     packages = ['file_resubmit'],
 
-    requires = ['python (>= 2.5)', 'django (>= 1.3)'],
+    requires = ['python (>= 2.5)', 'django (>= 1.3)', 'sorl.thumbnail (>=11.0)'],
 
-    description  = 'Keep submited files on forms validation errors.',
+    description  = 'Keeps submited files when validation errors occure.',
     long_description = readme,
     author       = 'Ilya Shalyapin',
     author_email = 'ishalyapin@gmail.com',
