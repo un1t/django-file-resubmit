@@ -23,8 +23,8 @@ setup(
     long_description = readme,
     author       = 'Ilya Shalyapin',
     author_email = 'ishalyapin@gmail.com',
-    url          = 'http://coderiver.ru',
-    download_url = 'https://un1t.github.com',
+    url          = 'https://github.com/un1t/django-file-resubmit',
+    download_url = 'https://github.com/un1t/django-file-resubmit/tarball/master',
     license      = 'MIT License',
     keywords     = 'django form filefield resubmit',
     classifiers  = [

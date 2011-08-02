@@ -15,7 +15,6 @@ class FileCache(object):
         self.backend = get_cache(CACHE_BACKEND)
 
     def put(self, key, upload):
-        upload.file.seek(0)
         state = {
             "name": upload.name,
             "size": upload.size,
@@ -28,16 +27,15 @@ class FileCache(object):
     def get(self, key, field_name):
         upload = None
         state = self.backend.get(key)
-        if state:
-            size = state["size"]
-            file = StringIO()
-            file.write(state["content"])
+        if state: 
+            f = StringIO()
+            f.write(state["content"])
             upload = InMemoryUploadedFile(
-                    file=file,
+                    file=f,
                     field_name=field_name,
                     name=state["name"],
                     content_type=state["content_type"],
-                    size=size,
+                    size=state["size"],
                     charset=state["charset"])
             upload.file.seek(0)
         return upload
