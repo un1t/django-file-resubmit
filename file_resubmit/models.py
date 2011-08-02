@@ -14,7 +14,7 @@ class FileCache(object):
     def __init__(self):
         self.backend = get_cache(CACHE_BACKEND)
 
-    def put(self, key, upload):
+    def set(self, key, upload):
         state = {
             "name": upload.name,
             "size": upload.size,
@@ -39,4 +39,7 @@ class FileCache(object):
                     charset=state["charset"])
             upload.file.seek(0)
         return upload
+    
+    def delete(self, key):
+        self.backend.delete(key)
 

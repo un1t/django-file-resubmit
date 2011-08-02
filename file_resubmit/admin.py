@@ -5,6 +5,7 @@ import random
 import time
  
 from django import forms
+from django.forms.widgets import FILE_INPUT_CONTRADICTION
 from django.conf import settings
 from django.db import models
 from django.forms import ClearableFileInput
@@ -25,13 +26,16 @@ class AdminResubmitBaseWidget(AdminImageWidget):
 
     def value_from_datadict(self, data, files, name):
         upload = super(AdminResubmitBaseWidget, self).value_from_datadict(data, files, name)
+        if upload == FILE_INPUT_CONTRADICTION:
+            return upload
+        
         self.input_name = "%s_cache_key" % name
         self.cache_key = data.get(self.input_name, "")
         
         if files.has_key(name):
             self.cache_key = self.random_key()[:10]
             upload = files[name]
-            FileCache().put(self.cache_key, upload)
+            FileCache().set(self.cache_key, upload)
         elif self.cache_key:
             restored = FileCache().get(self.cache_key, name)
             if restored:
