@@ -1,12 +1,20 @@
 # django-file-resubmit
 
-django-file-resubmit is a reusable Django application that keeps selected 
-files when forms validation errors occure.
+## What it does?
+
+In Django project you have forms with FileField, ImageField. Everything works great, but
+when ValidationError is raised, you have to reselect all files and images again. It is 
+kind of annoying. **django-file-resubmit** solves this problem.
+It works with FileField, ImageField and sorl.thumbnail.ImageField. 
 
 The original idea was developed by team of https://github.com/generalov/django-resubmit.
 django-file-resubmit was started to avoid some restrictions of django-resubmit, such as 
-supporting last sorl-thumbnail, simplify configuration and integration with a project.
+supporting last version of sorl-thumbnail, simplify configuration and integration with a project.
 
+## How it works?
+
+Here are advanced widgets for FileField and ImageField. When you submit files, every widget 
+save its file in cache. And when ValidationError is raised, widgets restore files from cache. 
 
 
 # Requirements
@@ -26,13 +34,8 @@ Add `"file_resubmit"` to `INSTALLED_APPS`.
 Default cache is `"file:///tmp/file_resubmit"`, you can setup it manually in settings.py.
 
     CACHES = {
-        'default': {
-            ...
-        },
-        'file_resubmit': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-            'LOCATION': '/path/to/cache',
-        }
+        'default': ...,
+        'file_resubmit': "memcached://127.0.0.1:11211/",
     }
 
 # Examples
