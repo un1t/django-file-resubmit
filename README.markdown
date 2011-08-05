@@ -1,7 +1,5 @@
 # django-file-resubmit
 
-## What it does?
-
 In Django project you have forms with FileField, ImageField. Everything works great, but
 when ValidationError is raised, you have to reselect all files and images again. It is 
 kind of annoying. **django-file-resubmit** solves this problem.
@@ -14,11 +12,17 @@ supporting last version of sorl-thumbnail, simplify configuration and integratio
 ## How it works?
 
 Here are advanced widgets for FileField and ImageField. When you submit files, every widget 
-save its file in cache. And when ValidationError is raised, widgets restore files from cache. 
+saves its file in cache. And when ValidationError is raised, widgets restore files from cache. 
 
 
 # Requirements
+
  - sorl-thumbnail, http://thumbnail.sorl.net/
+ 
+# Installation
+ 
+     $ pip install -e git+git://github.com/un1t/django-file-resubmit.git#egg=file_resubmit
+ 
 
 # Configuration 
 
