@@ -12,8 +12,7 @@ from django.utils.safestring import mark_safe
 
 from file_resubmit.models import FileCache
 
-
-class ResubmitBaseWidget(forms.widgets.FileInput):
+class ResubmitBaseWidget(forms.ClearableFileInput):
     
     def __init__(self, attrs=None, field_type=None):
         super(ResubmitBaseWidget, self).__init__()
