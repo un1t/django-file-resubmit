@@ -9,7 +9,7 @@ The original idea was developed by team of https://github.com/generalov/django-r
 django-file-resubmit was started to avoid some restrictions of django-resubmit, such as 
 supporting last version of sorl-thumbnail, simplify configuration and integration with a project.
 
-## How it works?
+## How does it work?
 
 Here are advanced widgets for FileField and ImageField. When you submit files, every widget 
 saves its file in cache. And when ValidationError is raised, widgets restore files from cache. 
@@ -35,11 +35,16 @@ Add `"file_resubmit"` to `INSTALLED_APPS`.
         ...
     }
 
-Default cache is `"file:///tmp/file_resubmit"`, you can setup it manually in settings.py.
+Setup cache in settings.py.
 
     CACHES = {
-        'default': ...,
-        'file_resubmit': "memcached://127.0.0.1:11211/",
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        },
+        "file_resubmit": {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            "LOCATION": project_path('data/cache/file_resubmit')
+        },
     }
 
 # Examples

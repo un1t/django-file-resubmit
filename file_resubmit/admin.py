@@ -14,7 +14,7 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail.fields import ImageField
 from sorl.thumbnail.admin.current import AdminImageWidget
 
-from file_resubmit.models import FileCache
+from file_resubmit.cache import FileCache
 
 
 class AdminResubmitBaseWidget(AdminImageWidget):
@@ -86,5 +86,5 @@ class AdminResubmitMixin(object):
             return db_field.formfield(widget=AdminResubmitImageWidget)
         elif isinstance(db_field, models.FileField):
             return db_field.formfield(widget=AdminResubmitFileWidget)
-        sup = super(AdminResubmitMixin, self)
-        return sup.formfield_for_dbfield(db_field, **kwargs)
+        else:
+            return super(AdminResubmitMixin, self).formfield_for_dbfield(db_field, **kwargs)

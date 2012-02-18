@@ -14,7 +14,7 @@ readme = open(os.path.join(os.path.dirname(__file__), 'README.markdown')).read()
 
 setup(
     name     = 'django-file-resubmit',
-    version  = '0.2',
+    version  = '0.3',
     packages = ['file_resubmit'],
 
     requires = ['python (>= 2.5)', 'django (>= 1.3)', 'sorl.thumbnail (>=11.0)'],
