@@ -28,13 +28,9 @@ setup(
     license      = 'MIT License',
     keywords     = 'django form filefield resubmit',
     classifiers  = [
-        'Development Status :: Development',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI License',
         'Programming Language :: Python',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Text Processing :: General',
     ],
 )
