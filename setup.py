@@ -7,20 +7,17 @@
 #
 
 import os
-from setuptools import setup
-
-
-readme = open(os.path.join(os.path.dirname(__file__), 'README.markdown')).read()
+from setuptools import setup, find_packages
 
 setup(
     name     = 'django-file-resubmit',
-    version  = '0.3',
-    packages = ['file_resubmit'],
+    version  = '0.3.4',
+    packages = find_packages(),
 
     requires = ['python (>= 2.5)', 'django (>= 1.3)', 'sorl.thumbnail (>=11.0)'],
 
     description  = 'Keeps submited files when validation errors occure.',
-    long_description = readme,
+    long_description = open('README.markdown').read(),
     author       = 'Ilya Shalyapin',
     author_email = 'ishalyapin@gmail.com',
     url          = 'https://github.com/un1t/django-file-resubmit',

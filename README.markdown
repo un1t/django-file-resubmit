@@ -21,7 +21,7 @@ saves its file in cache. And when ValidationError is raised, widgets restore fil
  
 # Installation
  
-     $ pip install -e git+git://github.com/un1t/django-file-resubmit.git#egg=file_resubmit
+     $ pip install django-file-resubmit
  
 
 # Configuration 
