@@ -11,13 +11,17 @@ from django.db import models
 from django.forms import ClearableFileInput
 from django.utils.safestring import mark_safe
 
-from sorl.thumbnail.fields import ImageField
-from sorl.thumbnail.admin.current import AdminImageWidget
+try:
+    from sorl.thumbnail.fields import ImageField
+    from sorl.thumbnail.admin.current import AdminImageWidget as BaseWidget
+except ImportError:
+    from django.forms import ImageField
+    from django.contrib.admin.widgets import AdminFileWidget as BaseWidget
 
 from file_resubmit.cache import FileCache
 
 
-class AdminResubmitBaseWidget(AdminImageWidget):
+class AdminResubmitBaseWidget(BaseWidget):
     
     def __init__(self, attrs=None, field_type=None):
         super(AdminResubmitBaseWidget, self).__init__()

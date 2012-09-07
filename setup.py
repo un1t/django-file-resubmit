@@ -11,10 +11,10 @@ from setuptools import setup, find_packages
 
 setup(
     name     = 'django-file-resubmit',
-    version  = '0.3.4',
+    version  = '0.4',
     packages = find_packages(),
 
-    requires = ['python (>= 2.5)', 'django (>= 1.3)', 'sorl.thumbnail (>=11.0)'],
+    requires = ['python (>= 2.5)', 'django (>= 1.2)'],
 
     description  = 'Keeps submited files when validation errors occure.',
     long_description = open('README.markdown').read(),

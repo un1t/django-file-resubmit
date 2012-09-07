@@ -5,19 +5,16 @@ when ValidationError is raised, you have to reselect all files and images again.
 kind of annoying. **django-file-resubmit** solves this problem.
 It works with FileField, ImageField and sorl.thumbnail.ImageField. 
 
-The original idea was developed by team of https://github.com/generalov/django-resubmit.
-django-file-resubmit was started to avoid some restrictions of django-resubmit, such as 
-supporting last version of sorl-thumbnail, simplify configuration and integration with a project.
-
 ## How does it work?
 
-Here are advanced widgets for FileField and ImageField. When you submit files, every widget 
+Here are special widgets for FileField and ImageField. When you submit files, every widget 
 saves its file in cache. And when ValidationError is raised, widgets restore files from cache. 
 
 
-# Requirements
+## Compatible with sorl-thumbnails
 
- - sorl-thumbnail, http://thumbnail.sorl.net/
+It is compatible with [sorl-thumbnail](http://thumbnail.sorl.net/).
+
  
 # Installation
  
@@ -30,7 +27,6 @@ Add `"file_resubmit"` to `INSTALLED_APPS`.
 
     INSTALLED_APPS = {
         ...
-        'sorl.thumbnail',
         'file_resubmit',
         ...
     }
@@ -43,26 +39,45 @@ Setup cache in settings.py.
         },
         "file_resubmit": {
             'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-            "LOCATION": project_path('data/cache/file_resubmit')
+            "LOCATION": '/tmp/file_resubmit/'
         },
-    }
-
+    
 # Examples
+
+models.py
+
+    from django.db import models
+    from django.db.models import ImageField
+    # or if you use sorl-thumbnail
+    # from sorl.thumbnail.fields import ImageField
+
+    class Page(models.Model):
+        title = models.CharField(max_length=100)
+        content = models.TextField()
+        image =  ImageField(upload_to='whatever1')
 
 ## Admin example
 
+admin.py
+
     from django.contrib import admin
     from file_resubmit.admin import AdminResubmitMixin
-    
-    class ModelAdmin(AdminResubmitMixin, ModelAdmin):
+    from .models import Page
+
+    class PageAdmin(AdminResubmitMixin, admin.ModelAdmin):
         pass
+
+    admin.site.register(Page, PageAdmin)
         
 ## Widgets examples
 
+admin.py
+
     from django.forms import ModelForm
     from file_resubmit.admin import AdminResubmitImageWidget, AdminResubmitFileWidget
+    from .models import Page
 
-    class MyModelForm(forms.ModelForm)
+    class PageModelForm(forms.ModelForm)
     
         class Meta:
             model = MyModel
@@ -70,6 +85,11 @@ Setup cache in settings.py.
                 'picture': AdminResubmitImageWidget,
                 'file': AdminResubmitFileWidget, 
             }
+
+    class PageAdmin(AdminResubmitMixin, admin.ModelAdmin):
+        form = PageModelForm
+
+    admin.site.register(Page, PageAdmin)
 
 # Licensing
 
