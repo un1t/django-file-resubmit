@@ -86,7 +86,7 @@ admin.py
                 'file': AdminResubmitFileWidget, 
             }
 
-    class PageAdmin(AdminResubmitMixin, admin.ModelAdmin):
+    class PageAdmin(admin.ModelAdmin):
         form = PageModelForm
 
     admin.site.register(Page, PageAdmin)
