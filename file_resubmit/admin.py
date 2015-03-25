@@ -4,7 +4,6 @@ import uuid
  
 from django import forms
 from django.forms.widgets import FILE_INPUT_CONTRADICTION
-from django.conf import settings
 from django.db import models
 from django.forms import ClearableFileInput
 from django.utils.safestring import mark_safe

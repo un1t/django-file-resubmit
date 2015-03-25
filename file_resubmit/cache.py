@@ -6,7 +6,6 @@ except ImportError:
 
 from django.core.cache import get_cache
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.conf import settings
 
 
 class FileCache(object):
