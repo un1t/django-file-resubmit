@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO as BytesIO
+except ImportError:
+    from io import BytesIO
 
 from django.core.cache import get_cache
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -28,7 +31,7 @@ class FileCache(object):
         upload = None
         state = self.backend.get(key)
         if state: 
-            f = StringIO()
+            f = BytesIO()
             f.write(state["content"])
             upload = InMemoryUploadedFile(
                     file=f,

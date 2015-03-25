@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-import hashlib  
-import random
-import time
+import uuid
  
 from django import forms
 from django.forms.widgets import FILE_INPUT_CONTRADICTION
@@ -35,8 +33,8 @@ class AdminResubmitBaseWidget(BaseWidget):
         
         self.input_name = "%s_cache_key" % name
         self.cache_key = data.get(self.input_name, "")
-        
-        if files.has_key(name):
+
+        if name in files:
             self.cache_key = self.random_key()[:10]
             upload = files[name]
             FileCache().set(self.cache_key, upload)
@@ -48,9 +46,7 @@ class AdminResubmitBaseWidget(BaseWidget):
         return upload
     
     def random_key(self):
-        x = "%s%s%s" % (settings.SECRET_KEY, time.time(), random.random())
-        random.seed(x)
-        return hashlib.md5(str(random.random())).hexdigest()
+        return uuid.uuid4().hex
     
     def output_extra_data(self, value):
         output = ''
