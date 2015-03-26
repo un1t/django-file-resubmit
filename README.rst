@@ -1,29 +1,35 @@
-# django-file-resubmit
+django-file-resubmit
+====================
 
 In Django project you have forms with FileField, ImageField. Everything works great, but
 when ValidationError is raised, you have to reselect all files and images again. It is 
 kind of annoying. **django-file-resubmit** solves this problem.
 It works with FileField, ImageField and sorl.thumbnail.ImageField. 
 
-## How does it work?
+How does it work?
+=================
 
 Here are special widgets for FileField and ImageField. When you submit files, every widget 
 saves its file in cache. And when ValidationError is raised, widgets restore files from cache. 
 
 
-## Compatible with sorl-thumbnails
+Compatible with sorl-thumbnails
+===============================
 
 It is compatible with [sorl-thumbnail](http://thumbnail.sorl.net/).
 
  
-# Installation
+Installation
+============
+::
  
      $ pip install django-file-resubmit
  
 
-# Configuration 
+Configuration 
+=============
 
-Add `"file_resubmit"` to `INSTALLED_APPS`.
+Add `"file_resubmit"` to `INSTALLED_APPS`. ::
 
     INSTALLED_APPS = {
         ...
@@ -31,7 +37,7 @@ Add `"file_resubmit"` to `INSTALLED_APPS`.
         ...
     }
 
-Setup cache in settings.py.
+Setup cache in settings.py. ::
 
     CACHES = {
         'default': {
@@ -42,9 +48,10 @@ Setup cache in settings.py.
             "LOCATION": '/tmp/file_resubmit/'
         },
     
-# Examples
+Examples
+========
 
-models.py
+models.py ::
 
     from django.db import models
     from django.db.models import ImageField
@@ -56,9 +63,10 @@ models.py
         content = models.TextField()
         image =  ImageField(upload_to='whatever1')
 
-## Admin example
+Admin example
+=============
 
-admin.py
+admin.py ::
 
     from django.contrib import admin
     from file_resubmit.admin import AdminResubmitMixin
@@ -69,9 +77,10 @@ admin.py
 
     admin.site.register(Page, PageAdmin)
         
-## Widgets examples
+Widgets examples
+================
 
-admin.py
+admin.py::
 
     from django.forms import ModelForm
     from file_resubmit.admin import AdminResubmitImageWidget, AdminResubmitFileWidget
@@ -91,7 +100,8 @@ admin.py
 
     admin.site.register(Page, PageAdmin)
 
-# Licensing
+Licensing
+=========
 
 django-file-resubmit is free software under terms of the MIT License.
 

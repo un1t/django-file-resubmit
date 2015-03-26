@@ -13,11 +13,8 @@ setup(
     name     = 'django-file-resubmit',
     version  = '0.4.1',
     packages = find_packages(),
-
-    requires = ['python (>= 2.5)', 'django (>= 1.2)'],
-
+    requires = ['python (>= 2.7)', 'django (>= 1.5)'],
     description  = 'Keeps submited files when validation errors occur.',
-    long_description = open('README.markdown').read(),
     author       = 'Ilya Shalyapin',
     author_email = 'ishalyapin@gmail.com',
     url          = 'https://github.com/un1t/django-file-resubmit',
@@ -29,5 +26,9 @@ setup(
         'Framework :: Django',
         'Intended Audience :: Developers',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
     ],
 )
