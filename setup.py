@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 
 setup(
     name     = 'django-file-resubmit',
-    version  = '0.4.1',
+    version  = '0.4.2',
     packages = find_packages(),
     requires = ['python (>= 2.7)', 'django (>= 1.5)'],
     description  = 'Keeps submited files when validation errors occur.',
