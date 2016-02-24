@@ -5,7 +5,6 @@ import uuid
 from django import forms
 from django.forms.widgets import FILE_INPUT_CONTRADICTION
 from django.db import models
-from django.forms import ClearableFileInput
 from django.utils.safestring import mark_safe
 
 try:
@@ -65,21 +64,15 @@ class AdminResubmitBaseWidget(BaseWidget):
 
 
 class AdminResubmitFileWidget(AdminResubmitBaseWidget):
-    template_with_initial = ClearableFileInput.template_with_initial
-    template_with_clear = ClearableFileInput.template_with_clear
-
     def render(self, name, value, attrs=None):
-        output = ClearableFileInput.render(self, name, value, attrs)
-        output += self.output_extra_data(value)
-        return mark_safe(output)
-
-
-class AdminResubmitImageWidget(AdminResubmitBaseWidget):
-    def render(self, name, value, attrs=None):
-        output = super(AdminResubmitImageWidget, self).render(
+        output = super(AdminResubmitFileWidget, self).render(
             name, value, attrs)
         output += self.output_extra_data(value)
         return mark_safe(output)
+
+
+class AdminResubmitImageWidget(AdminResubmitFileWidget):
+    pass
 
 
 class AdminResubmitMixin(object):
