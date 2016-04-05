@@ -22,28 +22,33 @@ class FileCache(object):
         return get_cache('file_resubmit')
 
     def set(self, key, upload):
-        state = {
+        params_state = {
             "name": upload.name,
             "size": upload.size,
             "content_type": upload.content_type,
             "charset": upload.charset,
-            "content": upload.file.read()}
+        }
         upload.file.seek(0)
-        self.backend.set(key, state)
+        self.backend.set(key + '_params', params_state)
+
+        file_state = upload.file.read()
+        upload.file.seek(0)
+        self.backend.set(key + '_value', file_state)
 
     def get(self, key, field_name):
         upload = None
-        state = self.backend.get(key)
-        if state:
+        params_state = self.backend.get(key + '_params')
+        value_state = self.backend.get(key + '_value')
+        if params_state and value_state:
             f = BytesIO()
-            f.write(state["content"])
+            f.write(value_state)
             upload = InMemoryUploadedFile(
                 file=f,
                 field_name=field_name,
-                name=state["name"],
-                content_type=state["content_type"],
-                size=state["size"],
-                charset=state["charset"],
+                name=params_state["name"],
+                content_type=params_state["content_type"],
+                size=params_state["size"],
+                charset=params_state["charset"],
             )
             upload.file.seek(0)
         return upload
