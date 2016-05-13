@@ -31,17 +31,20 @@ class AdminResubmitBaseWidget(BaseWidget):
             return upload
 
         self.input_name = "%s_cache_key" % name
-        self.cache_key = data.get(self.input_name, "")
+        self.cache_key = data.get(self.input_name, self.cache_key)
+
+        if self.cache_key:
+            restored = FileCache().get(self.cache_key, name)
+            if restored:
+                upload = restored
+                files[name] = upload
+                return upload
 
         if name in files:
             self.cache_key = self.random_key()[:10]
             upload = files[name]
             FileCache().set(self.cache_key, upload)
-        elif self.cache_key:
-            restored = FileCache().get(self.cache_key, name)
-            if restored:
-                upload = restored
-                files[name] = upload
+
         return upload
 
     def random_key(self):
