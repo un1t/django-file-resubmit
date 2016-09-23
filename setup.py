@@ -7,20 +7,14 @@
 #
 
 import os
-from setuptools import setup
-
-
-readme = open(os.path.join(os.path.dirname(__file__), 'README.markdown')).read()
+from setuptools import setup, find_packages
 
 setup(
     name     = 'django-file-resubmit',
-    version  = '0.2',
-    packages = ['file_resubmit'],
-
-    requires = ['python (>= 2.5)', 'django (>= 1.3)', 'sorl.thumbnail (>=11.0)'],
-
-    description  = 'Keeps submited files when validation errors occure.',
-    long_description = readme,
+    version  = '0.4.3',
+    packages = find_packages(),
+    requires = ['python (>= 2.7)', 'django (>= 1.5)'],
+    description  = 'Keeps submited files when validation errors occur.',
     author       = 'Ilya Shalyapin',
     author_email = 'ishalyapin@gmail.com',
     url          = 'https://github.com/un1t/django-file-resubmit',
@@ -28,13 +22,13 @@ setup(
     license      = 'MIT License',
     keywords     = 'django form filefield resubmit',
     classifiers  = [
-        'Development Status :: Development',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI License',
         'Programming Language :: Python',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Text Processing :: General',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
     ],
 )
