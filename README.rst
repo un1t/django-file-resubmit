@@ -1,63 +1,92 @@
-# django-file-resubmit
+django-file-resubmit
+====================
 
 In Django project you have forms with FileField, ImageField. Everything works great, but
 when ValidationError is raised, you have to reselect all files and images again. It is 
 kind of annoying. **django-file-resubmit** solves this problem.
 It works with FileField, ImageField and sorl.thumbnail.ImageField. 
 
-The original idea was developed by team of https://github.com/generalov/django-resubmit.
-django-file-resubmit was started to avoid some restrictions of django-resubmit, such as 
-supporting last version of sorl-thumbnail, simplify configuration and integration with a project.
+How does it work?
+=================
 
-## How it works?
-
-Here are advanced widgets for FileField and ImageField. When you submit files, every widget 
+Here are special widgets for FileField and ImageField. When you submit files, every widget 
 saves its file in cache. And when ValidationError is raised, widgets restore files from cache. 
 
 
-# Requirements
+Compatible with sorl-thumbnails
+===============================
 
- - sorl-thumbnail, http://thumbnail.sorl.net/
+It is compatible with [sorl-thumbnail](http://thumbnail.sorl.net/).
+
  
-# Installation
+Installation
+============
+::
  
-     $ pip install -e git+git://github.com/un1t/django-file-resubmit.git#egg=file_resubmit
+     $ pip install django-file-resubmit
  
 
-# Configuration 
+Configuration 
+=============
 
-Add `"file_resubmit"` to `INSTALLED_APPS`.
+Add `"file_resubmit"` to `INSTALLED_APPS`. ::
 
     INSTALLED_APPS = {
         ...
-        'sorl.thumbnail',
         'file_resubmit',
         ...
     }
 
-Default cache is `"file:///tmp/file_resubmit"`, you can setup it manually in settings.py.
+Setup cache in settings.py. ::
 
     CACHES = {
-        'default': ...,
-        'file_resubmit': "memcached://127.0.0.1:11211/",
-    }
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        },
+        "file_resubmit": {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            "LOCATION": '/tmp/file_resubmit/'
+        },
+    
+Examples
+========
 
-# Examples
+models.py ::
 
-## Admin example
+    from django.db import models
+    from django.db.models import ImageField
+    # or if you use sorl-thumbnail
+    # from sorl.thumbnail.fields import ImageField
+
+    class Page(models.Model):
+        title = models.CharField(max_length=100)
+        content = models.TextField()
+        image =  ImageField(upload_to='whatever1')
+
+Admin example
+=============
+
+admin.py ::
 
     from django.contrib import admin
     from file_resubmit.admin import AdminResubmitMixin
-    
-    class ModelAdmin(AdminResubmitMixin, ModelAdmin):
+    from .models import Page
+
+    class PageAdmin(AdminResubmitMixin, admin.ModelAdmin):
         pass
+
+    admin.site.register(Page, PageAdmin)
         
-## Widgets examples
+Widgets examples
+================
+
+admin.py::
 
     from django.forms import ModelForm
     from file_resubmit.admin import AdminResubmitImageWidget, AdminResubmitFileWidget
+    from .models import Page
 
-    class MyModelForm(forms.ModelForm)
+    class PageModelForm(forms.ModelForm)
     
         class Meta:
             model = MyModel
@@ -66,7 +95,13 @@ Default cache is `"file:///tmp/file_resubmit"`, you can setup it manually in set
                 'file': AdminResubmitFileWidget, 
             }
 
-# Licensing
+    class PageAdmin(admin.ModelAdmin):
+        form = PageModelForm
+
+    admin.site.register(Page, PageAdmin)
+
+Licensing
+=========
 
 django-file-resubmit is free software under terms of the MIT License.
 
