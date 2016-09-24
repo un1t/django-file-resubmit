@@ -25,9 +25,9 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 if not mock:
     raise ImproperlyConfigured("For testing mock is required.")
 
-from . import widgets
-from . import cache
-from . import admin
+from file_resubmit import widgets
+from file_resubmit import cache
+from file_resubmit import admin
 
 # shortest possible PNG file, courtesy http://garethrees.org/2007/11/14/pngcrush/
 PNG = (
