@@ -12,7 +12,7 @@ from .cache import FileCache
 
 class ResubmitBaseWidget(ClearableFileInput):
     def __init__(self, attrs=None, field_type=None):
-        super(ResubmitBaseWidget, self).__init__()
+        super(ResubmitBaseWidget, self).__init__(attrs=attrs)
         self.cache_key = ''
         self.field_type = field_type
 
