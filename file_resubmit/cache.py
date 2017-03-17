@@ -22,6 +22,7 @@ class FileCache(object):
         return get_cache('file_resubmit')
 
     def set(self, key, upload):
+        upload.file.seek(0)
         state = {
             "name": upload.name,
             "size": upload.size,
