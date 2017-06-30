@@ -2,7 +2,7 @@
 import os
 import uuid
 
-from django import forms, get_version
+from django import forms
 from django.forms.widgets import FILE_INPUT_CONTRADICTION
 from django.conf import settings
 from django.forms import ClearableFileInput
