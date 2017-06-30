@@ -60,11 +60,26 @@ class ResubmitFileWidget(ResubmitBaseWidget):
 
     def __init__(self, *args, **kwargs):
         super(ResubmitFileWidget, self).__init__(*args, **kwargs)
-        version = get_version()
-        version_lt_11 = int(version.split('.')[1]) < 11
-        if version_lt_11:
-            self.template_with_initial = ClearableFileInput.template_with_initial
-            self.template_with_clear = ClearableFileInput.template_with_clear
+        try:
+            self._template_with_initial = ClearableFileInput.template_with_initial
+            self._template_with_clear = ClearableFileInput.template_with_clear
+        except AttributeError:
+            self._template_with_clear = ''
+            self._template_with_initial = ''
+
+    @property
+    def template_with_initial(self):
+        if hasattr(self, '_template_with_initial'):
+            return self._template_with_initial
+        else:
+            return ''
+
+    @property
+    def template_with_clear(self):
+        if hasattr(self, '_template_with_clear'):
+            return self._template_with_clear
+        else:
+            return ''
 
     def render(self, name, value, attrs=None):
         output = ClearableFileInput.render(self, name, value, attrs)
