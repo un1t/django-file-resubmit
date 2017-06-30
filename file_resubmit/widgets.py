@@ -2,7 +2,7 @@
 import os
 import uuid
 
-from django import forms
+from django import forms, get_version
 from django.forms.widgets import FILE_INPUT_CONTRADICTION
 from django.conf import settings
 from django.forms import ClearableFileInput
@@ -57,8 +57,14 @@ class ResubmitBaseWidget(ClearableFileInput):
 
 
 class ResubmitFileWidget(ResubmitBaseWidget):
-    template_with_initial = ClearableFileInput.template_with_initial
-    template_with_clear = ClearableFileInput.template_with_clear
+
+    def __init__(self, *args, **kwargs):
+        super(ResubmitFileWidget, self).__init__(*args, **kwargs)
+        version = get_version()
+        version_lt_11 = int(version.split('.')[1]) < 11
+        if version_lt_11:
+            self.template_with_initial = ClearableFileInput.template_with_initial
+            self.template_with_clear = ClearableFileInput.template_with_clear
 
     def render(self, name, value, attrs=None):
         output = ClearableFileInput.render(self, name, value, attrs)
