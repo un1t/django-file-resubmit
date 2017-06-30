@@ -57,8 +57,37 @@ class ResubmitBaseWidget(ClearableFileInput):
 
 
 class ResubmitFileWidget(ResubmitBaseWidget):
-    template_with_initial = ClearableFileInput.template_with_initial
-    template_with_clear = ClearableFileInput.template_with_clear
+
+    def __init__(self, *args, **kwargs):
+        super(ResubmitFileWidget, self).__init__(*args, **kwargs)
+        try:
+            self._template_with_initial = ClearableFileInput.template_with_initial
+            self._template_with_clear = ClearableFileInput.template_with_clear
+        except AttributeError:
+            self._template_with_clear = ''
+            self._template_with_initial = ''
+
+    @property
+    def template_with_initial(self):
+        if hasattr(self, '_template_with_initial'):
+            return self._template_with_initial
+        else:
+            return ''
+
+    @template_with_initial.setter
+    def template_with_initial(self, value):
+        self._template_with_initial = value
+
+    @property
+    def template_with_clear(self):
+        if hasattr(self, '_template_with_clear'):
+            return self._template_with_clear
+        else:
+            return ''
+
+    @template_with_clear.setter
+    def template_with_clear(self, value):
+        self._template_with_clear = value
 
     def render(self, name, value, attrs=None):
         output = ClearableFileInput.render(self, name, value, attrs)
