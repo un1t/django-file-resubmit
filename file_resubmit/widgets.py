@@ -60,7 +60,7 @@ class ResubmitFileWidget(ResubmitBaseWidget):
     template_with_initial = getattr(ClearableFileInput, 'template_with_initial', '')
     template_with_clear = getattr(ClearableFileInput, 'template_with_clear', '')
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None, **kwargs):
         output = ClearableFileInput.render(self, name, value, attrs)
         output += self.output_extra_data(value)
         return mark_safe(output)
