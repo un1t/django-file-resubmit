@@ -7,27 +7,24 @@ except ImportError:
         mock = None
 
 import os
-import unittest
 import tempfile
 
 from django import forms
-from django.db import models
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin import ModelAdmin
 from django.contrib.auth import get_user_model
+from django.contrib.messages.storage.fallback import FallbackStorage
+from django.core.exceptions import ImproperlyConfigured
+from django.db import models
 from django.test import TestCase, RequestFactory
 from django.views.generic import FormView
-from django.core.exceptions import ImproperlyConfigured
-import django.core.urlresolvers
 
-from django.contrib.messages.storage.fallback import FallbackStorage
+from file_resubmit import widgets
+from file_resubmit import admin
 
 if not mock:
     raise ImproperlyConfigured("For testing mock is required.")
 
-from file_resubmit import widgets
-from file_resubmit import cache
-from file_resubmit import admin
 
 # shortest possible PNG file, courtesy http://garethrees.org/2007/11/14/pngcrush/
 PNG = (
@@ -36,16 +33,6 @@ PNG = (
     b'\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01\r\n-\xb4'
     b'\x00\x00\x00\x00IEND\xaeB`\x82'
 )
-
-class TestCache(object):
-    def __init__(self):
-        self.data = {}
-    
-    def get(key, *args, **kwargs):
-        return self.data.get(key)
-        
-    def set(key, value, *args, **kwargs):
-        self.data[key] = value
 
 
 class TestForm(forms.Form):
@@ -84,6 +71,7 @@ class BaseResubmitFileMixin(object):
         value_close_idx = rendered.index('"', value_idx + len(value_prefix))
         value = rendered[value_idx + len(value_prefix):value_close_idx]
         return resubmit_field_name, value
+
 
 class TestResubmitFileWidget(BaseResubmitFileMixin, TestCase):
     class DummyFormView(FormView):
@@ -171,19 +159,15 @@ class TestResubmitAdminWidget(BaseResubmitFileMixin, TestCase):
         admin_name = models.CharField(max_length=100, blank=False)
         admin_upload_file = models.FileField(upload_to="fake/")
 
-
     class TestImageModel(TestModel):
         admin_name = models.CharField(max_length=100, blank=False)
         admin_upload_image = models.ImageField(upload_to="fake/")
 
-
     class TestFileAdmin(admin.AdminResubmitMixin, TestModelAdmin):
         pass
 
-
     class TestImageAdmin(admin.AdminResubmitMixin, TestModelAdmin):
         pass
-
 
     def setUp(self):
         super(TestResubmitAdminWidget, self).setUp()

@@ -23,7 +23,7 @@ class AdminResubmitFileWidget(ResubmitFileWidget):
 
 
 class AdminResubmitImageWidget(AdminResubmitBaseWidget):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, renderer=None, attrs=None):
         output = super(AdminResubmitImageWidget, self).render(
             name, value, attrs)
         output += self.output_extra_data(value)
