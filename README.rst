@@ -16,7 +16,7 @@ saves its file in cache. And when ValidationError is raised, widgets restore fil
 Compatible with sorl-thumbnails
 ===============================
 
-It is compatible with [sorl-thumbnail](http://thumbnail.sorl.net/).
+It is compatible with `sorl-thumbnail <https://github.com/jazzband/sorl-thumbnail>`_.
 
  
 Installation
