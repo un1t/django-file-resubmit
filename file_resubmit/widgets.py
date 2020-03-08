@@ -23,9 +23,10 @@ class ResubmitBaseWidget(ClearableFileInput):
             return upload
 
         self.input_name = "%s_cache_key" % name
-        self.cache_key = data.get(self.input_name, "")
+        if not self.cache_key:
+            self.cache_key = data.get(self.input_name, "")
 
-        if name in files:
+        if name in files and not self.cache_key:
             self.cache_key = self.random_key()[:10]
             upload = files[name]
             FileCache().set(self.cache_key, upload)
