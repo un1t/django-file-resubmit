@@ -23,9 +23,10 @@ class ResubmitBaseWidget(ClearableFileInput):
             return upload
 
         self.input_name = "%s_cache_key" % name
-        self.cache_key = data.get(self.input_name, "")
+        if not self.cache_key:
+            self.cache_key = data.get(self.input_name, "")
 
-        if name in files:
+        if name in files and not self.cache_key:
             self.cache_key = self.random_key()[:10]
             upload = files[name]
             FileCache().set(self.cache_key, upload)
@@ -42,12 +43,13 @@ class ResubmitBaseWidget(ClearableFileInput):
     def output_extra_data(self, value):
         output = ''
         if value and self.cache_key:
-            output += ' ' + self.filename_from_value(value)
+            output += ' <span class="resubmit-filename">' + self.filename_from_value(value) + '</span>'
         if self.cache_key:
             output += forms.HiddenInput().render(
                 self.input_name,
                 self.cache_key,
-                {},
+                {'class': 'resubmit-hidden-input',
+                 'id': 'id_' + self.input_name},
             )
         return output
 
