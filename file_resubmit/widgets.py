@@ -43,12 +43,13 @@ class ResubmitBaseWidget(ClearableFileInput):
     def output_extra_data(self, value):
         output = ''
         if value and self.cache_key:
-            output += ' ' + self.filename_from_value(value)
+            output += ' <span class="resubmit-filename">' + self.filename_from_value(value) + '</span>'
         if self.cache_key:
             output += forms.HiddenInput().render(
                 self.input_name,
                 self.cache_key,
-                {},
+                {'class': 'resubmit-hidden-input',
+                 'id': 'id_' + self.input_name},
             )
         return output
 
