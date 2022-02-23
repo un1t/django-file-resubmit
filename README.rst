@@ -29,7 +29,9 @@ Installation
 Configuration 
 =============
 
-Add `"file_resubmit"` to `INSTALLED_APPS`. ::
+Add `"file_resubmit"` to `INSTALLED_APPS`. :
+
+.. code-block:: python
 
     INSTALLED_APPS = {
         ...
@@ -37,7 +39,10 @@ Add `"file_resubmit"` to `INSTALLED_APPS`. ::
         ...
     }
 
-Setup cache in settings.py. ::
+Setup cache in settings.py. :
+
+.. code-block:: python
+
 
     CACHES = {
         'default': {
@@ -51,7 +56,10 @@ Setup cache in settings.py. ::
 Examples
 ========
 
-models.py ::
+models.py :
+
+.. code-block:: python
+
 
     from django.db import models
     from django.db.models import ImageField
@@ -66,7 +74,10 @@ models.py ::
 Admin example
 =============
 
-admin.py ::
+admin.py :
+
+.. code-block:: python
+
 
     from django.contrib import admin
     from file_resubmit.admin import AdminResubmitMixin
@@ -80,7 +91,10 @@ admin.py ::
 Widgets examples
 ================
 
-admin.py::
+admin.py:
+
+.. code-block:: python
+
 
     from django.forms import ModelForm
     from file_resubmit.admin import AdminResubmitImageWidget, AdminResubmitFileWidget
